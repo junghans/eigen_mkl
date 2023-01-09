@@ -11,7 +11,7 @@ jobs:
       matrix:
         cxx: ['g++', 'icpx']
         repo: ['default', 'chuckyschulz']
-        skip_mkl: ['on', 'off']
+        mkl: ['mkl', 'nomkl']
     runs-on: ubuntu-latest
     container: ghcr.io/votca/buildenv/fedora:intel
     steps:
@@ -25,9 +25,9 @@ jobs:
       - name: Getting chuckyschulz patch
         if: ${{ matrix.repo == 'chuckyschulz' }}
         run: |
-          git -C eigen fetch "git@gitlab.com:chuckyschluz/eigen-chucky.git" 'colpivqrfix'
+          git -C eigen fetch "https://gitlab.com/chuckyschluz/eigen-chucky.git" 'colpivqrfix'
           git -C eigen checkout -b 'eigen-chucky-colpivqrfix' FETCH_HEAD
       - name: CMake
-        run: cmake -B builddir -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_DISABLE_FIND_PACKAGE_MKL=${{ matrix.skip_mkl }}
+        run: cmake -B builddir -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_DISABLE_FIND_PACKAGE_MKL=${{ matrix.mkl == 'nomkl' }}
       - name: Build
         run: cmake --build builddir --verbose
