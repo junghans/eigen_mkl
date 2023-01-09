@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         cxx: ['g++', 'icpx']
-        repo: ['default', 'chuckyschulz']
+        repo: ['master', 'chuckyschulz']
         mkl: ['mkl', 'nomkl']
     runs-on: ubuntu-latest
     container: ghcr.io/votca/buildenv/fedora:intel
