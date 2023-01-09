@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(foo CXX)
 find_package(Eigen3)
-#set(MKL_INTERFACE lp64)
 find_package(MKL)
 add_executable(dummy main.cpp linalg.cc)
 target_link_libraries(dummy Eigen3::Eigen MKL::MKL)
