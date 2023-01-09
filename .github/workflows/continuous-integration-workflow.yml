@@ -9,7 +9,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        cxx: ['g++', 'icpx']
+        cxx: ['g++', 'icpx', 'clang++', 'icpc']
         repo: ['master', 'chuckyschulz']
         mkl: ['mkl', 'nomkl']
     runs-on: ubuntu-latest
