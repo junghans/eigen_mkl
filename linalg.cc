@@ -1,4 +1,3 @@
-#define EIGEN_USE_MKL_ALL
 #include <Eigen/Eigen>
 
 Eigen::VectorXd linalg_constrained_qrsolve(const Eigen::MatrixXd &A,

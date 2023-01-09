@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    continue-on-error: true
+    strategy:
+      matrix:
+        cxx: ['g++', 'icpx']
+        repo: ['default', 'chuckyschulz']
+        skip_mkl: ['on', 'off']
+    runs-on: ubuntu-latest
+    container: ghcr.io/votca/buildenv/fedora:intel
+    steps:
+      - name: Checkout out code
+        uses: actions/checkout@v2
+      - name: Getting eigen master
+        run: |
+          sudo rm -rf /usr/include/eigen3/Eigen
+          git clone https://gitlab.com/libeigen/eigen
+          sudo ln -s $PWD/eigen/Eigen /usr/include/eigen3
+      - name: Getting chuckyschulz patch
+        if: ${{ matrix.repo == 'chuckyschulz' }}
+        run: |
+          git -C eigen fetch "git@gitlab.com:chuckyschluz/eigen-chucky.git" 'colpivqrfix'
+          git -C eigen checkout -b 'eigen-chucky-colpivqrfix' FETCH_HEAD
+      - name: CMake
+        run: cmake -B builddir -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_DISABLE_FIND_PACKAGE_MKL=${{ matrix.skip_mkl }}
+     -  name: Build
+        run: cmake --build builddir --verbose
