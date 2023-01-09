@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  docker:
+  CI:
     continue-on-error: true
     strategy:
       matrix:
@@ -29,5 +29,5 @@ jobs:
           git -C eigen checkout -b 'eigen-chucky-colpivqrfix' FETCH_HEAD
       - name: CMake
         run: cmake -B builddir -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_DISABLE_FIND_PACKAGE_MKL=${{ matrix.skip_mkl }}
-     -  name: Build
+      - name: Build
         run: cmake --build builddir --verbose
