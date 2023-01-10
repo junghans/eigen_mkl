@@ -27,6 +27,7 @@ jobs:
         run: |
           git -C eigen fetch "https://gitlab.com/chuckyschluz/eigen-chucky.git" 'colpivqrfix'
           git -C eigen checkout -b 'eigen-chucky-colpivqrfix' FETCH_HEAD
+          git -C eigen log -1
       - name: CMake
         run: cmake -B builddir -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_DISABLE_FIND_PACKAGE_MKL=${{ matrix.mkl == 'nomkl' }}
       - name: Build
