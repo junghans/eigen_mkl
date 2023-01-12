@@ -25,7 +25,7 @@ jobs:
       - name: Getting chuckyschulz patch
         if: ${{ matrix.repo == 'chuckyschulz' }}
         run: |
-          git -C eigen fetch "https://gitlab.com/chuckyschluz/eigen-chucky.git" 'colpivqrfix'
+          git -C eigen fetch "https://gitlab.com/chuckyschluz/eigen-chucky.git" 'qr_fix'
           git -C eigen checkout -b 'eigen-chucky-colpivqrfix' FETCH_HEAD
           git -C eigen log -1
       - name: CMake
